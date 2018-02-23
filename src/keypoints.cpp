@@ -53,7 +53,7 @@ Ptr<FeatureDetector> get_detector(int id = 'a') {
     }
     }
 
-    return detector;
+    return d;
 }
 
 

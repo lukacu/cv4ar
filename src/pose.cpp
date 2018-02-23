@@ -15,8 +15,8 @@ typedef struct CameraPose {
     unsigned int id;
 } CameraPose;
 
-Mat pattern, visualization;
-float pattern_size = 50;
+Mat marker, visualization;
+float marker_size = 50;
 Size2f camera_size(8, 6);
 vector<CameraPose> cameras;
 Scalar camera_color(100, 255, 100);
@@ -27,11 +27,11 @@ bool process_image(Mat& image, Mat intrinsics, Mat distortion, Mat& rotation, Ma
 
     cvtColor(image, image, COLOR_BGR2GRAY);
 
-    if (!detect_template_marker(image, pattern, pattern_size, intrinsics, distortion, rotation, translation))
+    if (!detect_template_marker(image, marker, marker_size, intrinsics, distortion, rotation, translation))
         return false;
 
 
-    Mat origin_points = (Mat_<float>(4,3) << 0, 0, 0, pattern_size, 0, 0, 0, pattern_size, 0, 0, 0, pattern_size);
+    Mat origin_points = (Mat_<float>(4,3) << 0, 0, 0, marker_size, 0, 0, 0, marker_size, 0, 0, 0, marker_size);
     vector<Point3f> camera_points;
     camera_points.push_back(Point3f(0, 0, 0));
     camera_points.push_back(Point3f(-camera_size.width / 2, -camera_size.height / 2, 5));
@@ -73,14 +73,14 @@ bool process_image(Mat& image, Mat intrinsics, Mat distortion, Mat& rotation, Ma
 int main(int argc, const char** argv) {
 
     string calibration_file("camera.yaml");
-    string pattern_file("marker.png");
+    string marker_file("marker.png");
     int camera_id = 0;
 
     if (argc > 1) camera_id = atoi(argv[1]);
-    if (argc > 2) pattern_file = argv[2];
+    if (argc > 2) marker_file = argv[2];
     if (argc > 3) calibration_file = argv[3];
 
-    pattern = imread(pattern_file, CV_LOAD_IMAGE_GRAYSCALE);
+    marker = imread(marker_file, CV_LOAD_IMAGE_GRAYSCALE);
 
     VideoCapture camera(camera_id);
 
@@ -89,8 +89,8 @@ int main(int argc, const char** argv) {
         return -1;
     }
 
-    if (pattern.empty()) {
-        cout << "Pattern not found" << endl;
+    if (marker.empty()) {
+        cout << "Marker not found" << endl;
         return -1;
     }
 

@@ -62,13 +62,13 @@ bool match_comparator (DMatch& i, DMatch& j) {
 
 int main( int argc, char** argv ) {
 
-    string marker_file("pattern.jpg");
+    string pattern_file("pattern.jpg");
     int camera_id = 0;
 
     if (argc > 1) camera_id = atoi(argv[1]);
-    if (argc > 2) marker_file = argv[2];
+    if (argc > 2) pattern_file = argv[2];
 
-    pattern = imread(marker_file, CV_LOAD_IMAGE_GRAYSCALE);
+    pattern = imread(pattern_file, CV_LOAD_IMAGE_GRAYSCALE);
 
     VideoCapture camera(camera_id);
 
@@ -127,34 +127,37 @@ int main( int argc, char** argv ) {
             image_points.push_back( keypoints_gray[ matches_filter[i].trainIdx ].pt );
         }
 
-        vector<int> mask;
-        Mat H = findHomography(object_points, image_points, RANSAC, 3, mask);
+        if (object_points.size() >= 4) {
 
+            vector<int> mask;
+            Mat H = findHomography(object_points, image_points, RANSAC, 3, mask);
 
-        int inliers = 0;
-        for (size_t j = 0; j < mask.size(); j++) {
-            if (!mask[j]) continue;
-            inliers++;
-        }
-
-        if (!H.empty() && inliers > inliers_threshold) {
-            vector<Point2f> model_points;
-            vector<Point2f> projected_points;
-            model_points.push_back(Point2f(0, 0));
-            model_points.push_back(Point2f((float)pattern.cols, 0));
-            model_points.push_back(Point2f((float)pattern.cols, (float)pattern.rows));
-            model_points.push_back(Point2f(0, (float)pattern.rows));
-
-            perspectiveTransform(model_points, projected_points, H);
-
-            line(frame, projected_points[0], projected_points[1], Scalar(255, 0, 0), 3);
-            line(frame, projected_points[1], projected_points[2], Scalar(255, 0, 0), 3);
-            line(frame, projected_points[2], projected_points[3], Scalar(255, 0, 0), 3);
-            line(frame, projected_points[3], projected_points[0], Scalar(255, 0, 0), 3);
-
+            int inliers = 0;
             for (size_t j = 0; j < mask.size(); j++) {
                 if (!mask[j]) continue;
-                circle(frame, image_points[j], 3, Scalar(0, 255, 0));
+                inliers++;
+            }
+
+            if (!H.empty() && inliers > inliers_threshold) {
+                vector<Point2f> model_points;
+                vector<Point2f> projected_points;
+                model_points.push_back(Point2f(0, 0));
+                model_points.push_back(Point2f((float)pattern.cols, 0));
+                model_points.push_back(Point2f((float)pattern.cols, (float)pattern.rows));
+                model_points.push_back(Point2f(0, (float)pattern.rows));
+
+                perspectiveTransform(model_points, projected_points, H);
+
+                line(frame, projected_points[0], projected_points[1], Scalar(255, 0, 0), 3);
+                line(frame, projected_points[1], projected_points[2], Scalar(255, 0, 0), 3);
+                line(frame, projected_points[2], projected_points[3], Scalar(255, 0, 0), 3);
+                line(frame, projected_points[3], projected_points[0], Scalar(255, 0, 0), 3);
+
+                for (size_t j = 0; j < mask.size(); j++) {
+                    if (!mask[j]) continue;
+                    circle(frame, image_points[j], 3, Scalar(0, 255, 0));
+                }
+
             }
 
         }

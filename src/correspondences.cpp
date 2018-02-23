@@ -61,13 +61,13 @@ bool match_comparator (DMatch& i, DMatch& j) {
 
 int main( int argc, char** argv ) {
 
-    string marker_file("pattern.jpg");
+    string pattern_file("pattern.jpg");
     int camera_id = 0;
 
     if (argc > 1) camera_id = atoi(argv[1]);
-    if (argc > 2) marker_file = argv[2];
+    if (argc > 2) pattern_file = argv[2];
 
-    pattern = imread(marker_file, CV_LOAD_IMAGE_GRAYSCALE);
+    pattern = imread(pattern_file, CV_LOAD_IMAGE_GRAYSCALE);
 
     VideoCapture camera(camera_id);
 
