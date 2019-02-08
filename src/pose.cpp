@@ -80,7 +80,7 @@ int main(int argc, const char** argv) {
     if (argc > 2) marker_file = argv[2];
     if (argc > 3) calibration_file = argv[3];
 
-    marker = imread(marker_file, CV_LOAD_IMAGE_GRAYSCALE);
+    marker = imread(marker_file, IMREAD_GRAYSCALE);
 
     VideoCapture camera(camera_id);
 

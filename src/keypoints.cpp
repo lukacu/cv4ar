@@ -85,7 +85,7 @@ int main( int argc, char** argv ) {
         return -1;
     }
 
-    namedWindow(WINDOW_NAME, CV_WINDOW_AUTOSIZE);
+    namedWindow(WINDOW_NAME, WINDOW_AUTOSIZE);
 
 #ifdef _XFEATURES
     cout << "Press: \n * s: SIFT \n * u: SURF \n * f: FAST \n * b: BRISK \n * o: ORB \n * m: MSER \n * a: AKAZE \n";
@@ -102,7 +102,7 @@ int main( int argc, char** argv ) {
         if (frame.empty())
             break;
 
-        cvtColor(frame, gray, CV_BGR2GRAY);
+        cvtColor(frame, gray, COLOR_BGR2GRAY);
 
         do_detect(gray);
 

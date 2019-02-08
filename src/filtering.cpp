@@ -86,7 +86,7 @@ int main( int argc, char** argv ) {
         return -1;
     }
 
-    namedWindow(WINDOW_NAME, CV_WINDOW_AUTOSIZE);
+    namedWindow(WINDOW_NAME, WINDOW_AUTOSIZE);
 
     cout << "Press: \n * b: Blur \n * g: Gaussian blur \n * m: Median \n * l: Bilateral \n * e: Erode \n * d: Dilate \n * x: Sobel X direction \n * y: Sobel Y direction \n * s: Sharpening \n";
 
@@ -97,7 +97,7 @@ int main( int argc, char** argv ) {
 
         camera.read(frame);
 
-        cvtColor(frame, src, CV_BGR2GRAY);
+        cvtColor(frame, src, COLOR_BGR2GRAY);
 
         do_filtering();
 

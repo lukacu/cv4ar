@@ -29,7 +29,7 @@ int main( int argc, char** argv ) {
         return -1;
     }
 
-    namedWindow(WINDOW_NAME, CV_WINDOW_AUTOSIZE);
+    namedWindow(WINDOW_NAME, WINDOW_AUTOSIZE);
 
     cout << "Press: \n * a: All \n * f: Filtered \n";
 
@@ -37,7 +37,7 @@ int main( int argc, char** argv ) {
 
         camera.read(frame);
 
-        cvtColor(frame, src, CV_BGR2GRAY);
+        cvtColor(frame, src, COLOR_BGR2GRAY);
 
         int offset = 5;
         int block_size = 45;
@@ -48,7 +48,7 @@ int main( int argc, char** argv ) {
         vector<vector<Point> > contours;
         vector<Point> polygon;
 
-        findContours(dst, contours, CV_RETR_LIST, CV_CHAIN_APPROX_SIMPLE);
+        findContours(dst, contours, RETR_LIST, CHAIN_APPROX_SIMPLE);
 
         if (mode == CONTOURS_ALL) {
             drawContours(frame, contours, -1, Scalar(255, 255, 0));

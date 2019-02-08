@@ -38,9 +38,9 @@ int main(int argc, char** argv) {
         return -1;
     }
 
-    src = imread(argv[1], CV_LOAD_IMAGE_GRAYSCALE);
+    src = imread(argv[1], IMREAD_GRAYSCALE);
 
-    namedWindow(WINDOW_NAME, CV_WINDOW_AUTOSIZE);
+    namedWindow(WINDOW_NAME, WINDOW_AUTOSIZE);
 
     createTrackbar(TRACKBAR_NAME_LOW, WINDOW_NAME, &hysteresis_low, MAX_THRESHOLD_SIZE);
     createTrackbar(TRACKBAR_NAME_HIGH, WINDOW_NAME, &hysteresis_high, MAX_THRESHOLD_SIZE);
@@ -50,7 +50,7 @@ int main(int argc, char** argv) {
 
         camera.read(frame);
 
-        cvtColor(frame, src, CV_BGR2GRAY);
+        cvtColor(frame, src, COLOR_BGR2GRAY);
 
         do_canny();
 

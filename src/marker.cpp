@@ -27,7 +27,7 @@ bool detect_template_marker_corners(Mat image, Mat marker, vector<Point2f>& imag
     vector<vector<Point> > contours;
     vector<Point> polygon;
 
-    findContours(temp, contours, CV_RETR_LIST, CV_CHAIN_APPROX_SIMPLE);
+    findContours(temp, contours, RETR_LIST, CHAIN_APPROX_SIMPLE);
 
     if(marker.cols != marker.rows)
         throw runtime_error("Not a square marker");

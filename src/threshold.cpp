@@ -32,7 +32,7 @@ int main( int argc, char** argv ) {
         return -1;
     }
 
-    namedWindow(WINDOW_NAME, CV_WINDOW_AUTOSIZE);
+    namedWindow(WINDOW_NAME, WINDOW_AUTOSIZE);
 
     cout << "Press: \n * b: Binary \n * i: Binary Inverted \n * t: Truncate \n * z: To Zero \n * v: To Zero Inverted \n";
 
@@ -47,7 +47,7 @@ int main( int argc, char** argv ) {
 
         camera.read(frame);
 
-        cvtColor(frame, src, CV_BGR2GRAY);
+        cvtColor(frame, src, COLOR_BGR2GRAY);
 
 #ifndef ADAPTIVE
         threshold(src, dst, threshold_value, 255, threshold_type);
